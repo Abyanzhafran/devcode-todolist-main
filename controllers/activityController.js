@@ -66,7 +66,7 @@ const getById = async (req, res, next) => {
     res.status(200).send({
       status: "Success",
       message: "Success",
-      data: mappedActivities,
+      data: mappedActivities[0],
     });
   } catch (error) {
     console.log(error);
@@ -79,7 +79,7 @@ const addActivity = async (req, res, next) => {
     const validate = validationResult(req);
 
     if (validate.errors.length !== 0) {
-      return res.status(404).send({
+      return res.status(400).send({
         status: "Bad Request",
         message: validate.errors[0].msg,
         data: {},
@@ -107,7 +107,7 @@ const addActivity = async (req, res, next) => {
     res.status(201).send({
       status: "Success",
       message: "Success",
-      data: mappedActivities,
+      data: mappedActivities[0],
     });
   } catch (error) {
     console.error(error);
@@ -145,7 +145,18 @@ const deleteById = async (req, res, next) => {
 const updateById = async (req, res, next) => {
   try {
     const activity_id = req.params.activity_id;
-    const data = req.body;
+    const validate = validationResult(req);
+
+    if (validate.errors.length !== 0) {
+      return res.status(400).send({
+        status: "Bad Request",
+        message: validate.errors[0].msg,
+        data: {},
+      });
+    }
+
+    const { title, email } = req.body;
+
     const [activity] = await db.query(
       `SELECT * FROM activities WHERE activity_id=${activity_id}`
     );
@@ -158,19 +169,19 @@ const updateById = async (req, res, next) => {
     }
 
     const currentDateTime = new Date();
-    const title = data.title || activity[0].title;
-    const email = data.email || activity[0].email;
+    const setTitle = title || activity[0].title;
+    const setEmail = email || activity[0].email;
 
     const readyToUpdate = await db.query(
       "UPDATE `activities` SET `title`=?, `email`=? WHERE `activity_id`=?",
-      [title, email, activity_id]
+      [setTitle, setEmail, activity_id]
     );
 
     const mappedActivity = activity.map((activity) => {
       return {
         id: activity.activity_id,
-        title: title,
-        email: email,
+        email: setEmail,
+        title: setTitle,
         created_at: activity.created_at,
         updated_at: currentDateTime.toISOString(),
         deleted_at: null,

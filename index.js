@@ -21,6 +21,9 @@ app.use((err, req, res, next) => {
   });
 });
 
+app.get("/", (req, res) => {
+  res.status(200).send("Welcome, helloowww");
+});
 app.use("/activity-groups", activityRouter);
 app.use("/todo-items", todoRouter);
 
