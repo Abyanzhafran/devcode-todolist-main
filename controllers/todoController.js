@@ -39,7 +39,6 @@ const getAll = async (req, res, next) => {
 
 const getByGroupId = async (req, res, next) => {
   const activity_group_id = req.query.activity_group_id;
-  console.log("log : ", activity_group_id);
 
   try {
     const [todo] = await db.query(
@@ -108,7 +107,7 @@ const getById = async (req, res, next) => {
     res.status(200).send({
       status: "Success",
       message: "Success",
-      data: mappedTodos,
+      data: mappedTodos[0],
     });
   } catch (error) {
     console.error(error);
@@ -144,7 +143,7 @@ const addTodo = async (req, res, next) => {
         updated_at: todo.created_at,
         id: todo.todo_id,
         title: todo.title,
-        activity_group_id: todo.activity_group_id,
+        activity_group_id: parseInt(todo.activity_group_id),
         is_active: "true",
         priority: todo.priority,
       };
@@ -216,7 +215,7 @@ const updateById = async (req, res, next) => {
       return {
         id: todo.todo_id,
         activity_group_id: todo.activity_group_id,
-        title: todo.title,
+        title: title,
         is_active: "1",
         priority: "very-high",
         created_at: todo.created_at,
