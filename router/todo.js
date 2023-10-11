@@ -17,8 +17,6 @@ router.get("/activity-test", (req, res) => {
 // prioritize problem in here
 router.get("/", getAll);
 
-// router.get("/", getByGroupId);
-
 router.get("/:todo_id", getById);
 
 router.post("/", todoValidator.validateTodoPost, addTodo);

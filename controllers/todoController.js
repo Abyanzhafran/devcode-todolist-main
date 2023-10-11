@@ -10,6 +10,13 @@ const getTodoForResponse = async (todo_id) => {
 };
 
 const getAll = async (req, res, next) => {
+  const activity_group_id = req.query.activity_group_id;
+
+  if (activity_group_id !== undefined) {
+    getByGroupId(req, res, next, activity_group_id);
+    return;
+  }
+
   try {
     const [todos] = await db.query("SELECT * FROM todos");
 
@@ -37,18 +44,17 @@ const getAll = async (req, res, next) => {
   }
 };
 
-const getByGroupId = async (req, res, next) => {
-  const activity_group_id = req.query.activity_group_id;
-
+const getByGroupId = async (req, res, next, activity_group_id) => {
   try {
     const [todo] = await db.query(
       `SELECT * FROM todos WHERE activity_group_id=${activity_group_id}`
     );
 
     if (todo.length === 0) {
-      return res.status(404).json({
-        status: "Not Found",
-        message: `Todo with ID ${activity_group_id} Not Found`,
+      return res.status(200).send({
+        status: "Success",
+        message: "Success",
+        data: [],
       });
     }
 
