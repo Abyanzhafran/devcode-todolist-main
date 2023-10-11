@@ -88,6 +88,7 @@ const getById = async (req, res, next) => {
       return res.status(404).send({
         status: "Not Found",
         message: `Todo with ID ${todo_id} Not Found`,
+        data: {},
       });
     }
 
@@ -120,7 +121,7 @@ const addTodo = async (req, res, next) => {
     const validate = validationResult(req);
 
     if (validate.errors.length !== 0) {
-      return res.status(404).send({
+      return res.status(400).send({
         status: "Bad Request",
         message: validate.errors[0].msg,
         data: {},
@@ -144,7 +145,7 @@ const addTodo = async (req, res, next) => {
         id: todo.todo_id,
         title: todo.title,
         activity_group_id: parseInt(todo.activity_group_id),
-        is_active: "true",
+        is_active: true,
         priority: todo.priority,
       };
     });
