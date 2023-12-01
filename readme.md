@@ -25,7 +25,7 @@ npm start
 ```
 
 ## Run the application using docker image
-Running a Docker container from a Docker Hub repository is a straightforward process. Here are the general steps:
+Here are the general steps:
 
 1. Open [Docker hub](https://hub.docker.com/)
 
@@ -65,3 +65,6 @@ Running a Docker container from a Docker Hub repository is a straightforward pro
    ```
 
    This command will show you a list of running containers along with their details.
+
+6. **Detailed documentation about how to containerize a nodejs app :**
+https://docs.docker.com/language/nodejs/
