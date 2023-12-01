@@ -25,6 +25,7 @@ npm start
 ```
 
 ## Run the application using docker image
+
 Here are the general steps:
 
 1. Open [Docker hub](https://hub.docker.com/)
@@ -54,7 +55,7 @@ Here are the general steps:
    ```
 
    - `-d`: Run the container in the background (detached mode).
-   - `-p 8080:80`: Map port 8080 on the host to port 80 on the container.
+   - `-p 3030:3030`: Map port 3030 on the host to port 3030 on the container.
    - `--name my_container`: Assign a name to the container.
 
 5. **Verify the Container is Running :**
@@ -67,4 +68,4 @@ Here are the general steps:
    This command will show you a list of running containers along with their details.
 
 6. **Detailed documentation about how to containerize a nodejs app :**
-https://docs.docker.com/language/nodejs/
+   https://docs.docker.com/language/nodejs/
